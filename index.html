@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Employee Table</title>
+    <script>
+        function viewData() {
+            var xml = document.getElementById('xmlData').value;
+            var xsl = document.getElementById('xslData').value;
+            var processor = new XSLTProcessor();
+            var xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
+            var xslDoc = new DOMParser().parseFromString(xsl, 'text/xml');
+            processor.importStylesheet(xslDoc);
+            var result = processor.transformToDocument(xmlDoc);
+            document.getElementById('output').innerHTML = new XMLSerializer().serializeToString(result);
+        }
+    </script>
+    <style type="text/css">
+        button {
+            background-color: #ff6347; /* Tomato */
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #ff4500; /* Orange Red */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4682b4; /* Steel Blue */
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f0f8ff; /* Alice Blue */
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Brand-Item Table</h2>
+    <textarea id="xmlData" style="display:none;"><?xml version="1.0" encoding="UTF-8"?>
+        <brandsystem>
+            <item>
+            <id>1</id>
+            <iname>Shirt</iname>
+            <brand>US Polo</brand>
+            </item>
+            <item>
+            <id>2</id>
+            <iname>Tooth Brush</iname>
+            <brand>Colgate</brand>
+            </item>
+            <item>
+            <id>3</id>
+            <iname>Tooth paste</iname>
+            <brand>Pepsodyne</brand>
+            </item>
+            <item>
+            <id>4</id>
+            <iname>Soap</iname>
+            <brand>Dove</brand>
+            </item>
+            <item>
+            <id>5</id>
+            <iname>Face cream</iname>
+            <brand>Mama Earth</brand>
+            </item>
+            <item>
+            <id>6</id>
+            <iname>Phone</iname>
+            <brand>Vivo</brand>
+            </item>
+            <item>
+            <id>7</id>
+            <iname>Tv</iname>
+            <brand>LG</brand>
+            </item>
+            <item>
+            <id>8</id>
+            <iname>Laptop</iname>
+            <brand>Dell</brand>
+            </item>
+            <item>
+            <id>9</id>
+            <iname>Fan</iname>
+            <brand>Havell</brand>
+            </item>
+            <item>
+            <id>10</id>
+            <iname>AC</iname>
+            <brand>Lloyd</brand>
+            </item>
+            <item>
+            <id>11</id>
+            <iname>Washing Machine</iname>
+            <brand>Samsung</brand>
+            </item>
+            <item>
+            <id>12</id>
+            <iname>Noodles</iname>
+            <brand>Nestle</brand>
+            </item>
+            <item>
+            <id>13</id>
+            <iname>Bread</iname>
+            <brand>Fresh Choice</brand>
+            </item>
+            <item>
+            <id>14</id>
+            <iname>Bags</iname>
+            <brand>Wildcraft</brand>
+            </item>
+            <item>
+            <id>15</id>
+            <iname>Jeans</iname>
+            <brand>Pepe</brand>
+            </item>
+            <item>
+            <id>16</id>
+            <iname>Tops</iname>
+            <brand>Only</brand>
+            </item>
+            <item>
+            <id>17</id>
+            <iname>Shoes</iname>
+            <brand>Bata</brand>
+            </item>
+            <item>
+            <id>18</id>
+            <iname>Bike</iname>
+            <brand>Honda</brand>
+            </item>
+            <item>
+            <id>19</id>
+            <iname>Matress</iname>
+            <brand>Restwell</brand>
+            </item>
+            <item>
+            <id>20</id>
+            <iname>Locker</iname>
+            <brand>IGodrej</brand>
+            </item>
+            </brandsystem>
+</textarea>
+    <textarea id="xslData" style="display:none;"><?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+            <body>
+                <h2>Brand-Items Table</h2>
+                <table border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Item</th>
+                        <th>Brand</th>
+                    </tr>
+                    <xsl:for-each select="brandsystem/item">
+                        <tr>
+                            <td><xsl:value-of select="id"/></td>
+                            <td><xsl:value-of select="iname"/></td>
+                            <td><xsl:value-of select="brand"/></td>
+                        </tr>
+                    </xsl:for-each>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>
+</textarea>
+    <button onclick="viewData()">View Data</button>
+    <div id="output"></div>
+</body>
+
+</html>
